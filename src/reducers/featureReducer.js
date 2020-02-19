@@ -16,19 +16,21 @@ const initialState = {
 }
 
 export const featureReducer = (state = initialState, action) => {
+  const addedFeature = state.additionalFeatures.find(feature => 
+    feature.id === action.payload
+  )
   switch (action.type) {
       case 'ADD_FEATURE':
-        const newFeature = state.additionalFeatures.find(feature => 
-          feature.id === action.payload
-        )
         return {
           ...state,
+          additionalPrice: state.additionalPrice + addedFeature.price,
           car: {...state.car, 
-                features: [...state.car.features, newFeature]}
+                features: [...state.car.features, addedFeature]}
         } 
       case 'REMOVE_FEATURE':
         return {
           ...state,
+          additionalPrice: state.additionalPrice - addedFeature.price,
           car: {...state.car,
                 features: state.car.features.filter(feature => feature.id !== action.payload)}
         }
